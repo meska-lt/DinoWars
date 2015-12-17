@@ -19,8 +19,9 @@ public class Wall : MonoBehaviour
 	//DamageWall is called when the player attacks a wall.
 	public void DamageWall (int loss)
 	{
+		this.spriteRenderer.enabled = false;
 //		SoundManager.instance.RandomizeSfx (chopSound1, chopSound2); //Call the RandomizeSfx function of SoundManager to play one of two chop sounds.		
-		spriteRenderer.sprite = dmgSprite; //Set spriteRenderer to the damaged wall sprite.
+//		spriteRenderer.sprite = dmgSprite; //Set spriteRenderer to the damaged wall sprite.
 //		hp -= loss; //Subtract loss from hit point total.
 
 		//If hit points are less than or equal to zero:
