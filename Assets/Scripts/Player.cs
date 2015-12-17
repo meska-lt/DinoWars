@@ -4,6 +4,12 @@ using System.Collections;
 //Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
 public class Player : MovingObject
 {
+	private const string AnimatorTriggerIdle = "PlayerIdle";
+	private const string AnimatorTriggerMoveUp = "DinoUp";
+	private const string AnimatorTriggerMoveRight = "DinoRight";
+	private const string AnimatorTriggerMoveDown = "DinoDown";
+	private const string AnimatorTriggerMoveLeft = "DinoLeft";
+
 //	public float restartLevelDelay = 1f; //Delay time in seconds to restart level.
 //	public int pointsPerFood = 10; //Number of points to add to player food points when picking up a food object.
 //	public int pointsPerSoda = 20; //Number of points to add to player food points when picking up a soda object.
@@ -71,16 +77,30 @@ public class Player : MovingObject
 		//If Move returns true, meaning Player was able to move into an empty space.
 		if (Move (xDir, yDir, out hit)) 
 		{
-			//Call RandomizeSfx of SoundManager to play the move sound, passing in two audio clips to choose from.
+			if ((xDir == 0) && (yDir == 1) && !animator.GetBool(AnimatorTriggerMoveUp))
+				animator.SetBool(AnimatorTriggerMoveUp, true);
+			else if ((xDir == 1) && (yDir == 0) && !animator.GetBool(AnimatorTriggerMoveRight))
+				animator.SetBool(AnimatorTriggerMoveRight, true);
+			else if ((xDir == 0) && (yDir == -1) && !animator.GetBool(AnimatorTriggerMoveDown))
+				animator.SetBool(AnimatorTriggerMoveDown, true);
+			else if ((xDir == -1) && (yDir == 0) && !animator.GetBool(AnimatorTriggerMoveLeft))
+				animator.SetBool(AnimatorTriggerMoveLeft, true);
 		}
-		
-		//Since the player has moved and lost food points, check if the game has ended.
-		CheckIfGameOver ();
+
+		CheckIfGameOver (); //Since the player has moved and lost food points, check if the game has ended.
 		
 		//Set the playersTurn boolean of GameManager to false now that players turn is over.
 //		GameManager.instance.playersTurn = false;
 	}
-	
+
+	protected override void OnDoneMoving ()
+	{
+		animator.SetBool(AnimatorTriggerMoveUp, false);
+		animator.SetBool(AnimatorTriggerMoveRight, false);
+		animator.SetBool(AnimatorTriggerMoveDown, false);
+		animator.SetBool(AnimatorTriggerMoveLeft, false);
+		animator.SetBool(AnimatorTriggerIdle, true);
+	}
 	
 	//OnCantMove overrides the abstract function OnCantMove in MovingObject.
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
