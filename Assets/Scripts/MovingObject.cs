@@ -4,7 +4,7 @@ using System.Collections;
 //The abstract keyword enables you to create classes and class members that are incomplete and must be implemented in a derived class.
 public abstract class MovingObject : MonoBehaviour
 {
-	public float moveTime = 0.1f; //Time it will take object to move, in seconds.
+	public float moveTime = 1f; //Time it will take object to move, in seconds.
 	public LayerMask blockingLayer; //Layer on which collision will be checked.
 	private bool doneWalking = true;
 
@@ -78,6 +78,7 @@ public abstract class MovingObject : MonoBehaviour
 			yield return null; //Return and loop until sqrRemainingDistance is close enough to zero to end the function
 		}
 
+		OnDoneMoving ();
 		doneWalking = true;
 	}
 	
@@ -103,6 +104,7 @@ public abstract class MovingObject : MonoBehaviour
 
 	//The abstract modifier indicates that the thing being modified has a missing or incomplete implementation.
 	//OnCantMove will be overriden by functions in the inheriting classes.
-	protected abstract void OnCantMove <T> (T component)
-		where T : Component;
+	protected abstract void OnCantMove <T> (T component) where T : Component;
+
+	protected abstract void OnDoneMoving ();
 }
