@@ -244,6 +244,14 @@ Prefab:
       propertyPath: moveTime
       value: .5
       objectReference: {fileID: 0}
+    - target: {fileID: 6107020, guid: 48460f3313ed9412f9580966de7fa440, type: 2}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107020, guid: 48460f3313ed9412f9580966de7fa440, type: 2}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48460f3313ed9412f9580966de7fa440, type: 2}
   m_IsPrefabParent: 0
