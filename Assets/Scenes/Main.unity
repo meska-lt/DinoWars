@@ -242,7 +242,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11491570, guid: 48460f3313ed9412f9580966de7fa440, type: 2}
       propertyPath: moveTime
-      value: .5
+      value: .25
       objectReference: {fileID: 0}
     - target: {fileID: 6107020, guid: 48460f3313ed9412f9580966de7fa440, type: 2}
       propertyPath: m_Size.x

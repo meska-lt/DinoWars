@@ -15,6 +15,7 @@ public class Enemy : MovingObject
 	private int lastHorizontalDirection = 0;
 	private int lastVerticalDirection = 0;
 	private int timeStandingStill = 0;
+	bool animationOngoing = false;
 	
 	protected override void Start()
 	{
@@ -75,7 +76,7 @@ public class Enemy : MovingObject
 //		RaycastHit2D hit; //Hit allows us to reference the result of the Linecast done in Move.
 
 //		bool canMove = Move (xDir, yDir, out hit);
-//		if (canMove) {
+		if (!base.animationOngoing) {
 			animator.SetBool (AnimatorTriggerIdle, false);
 			
 			if ((xDir == 0) && (yDir == 1) && !animator.GetBool (AnimatorTriggerMoveUp))
@@ -88,7 +89,9 @@ public class Enemy : MovingObject
 				animator.SetBool (AnimatorTriggerMoveLeft, true);
 			else
 				animator.SetBool (AnimatorTriggerIdle, true);
-//		}
+
+			base.animationOngoing = true;
+		}
 
 		//If Move returns true, meaning Player was able to move into an empty space.
 		//Since the player has moved and lost food points, check if the game has ended.
