@@ -115,7 +115,7 @@ public class BoardManager : MonoBehaviour
 	public void SetupScene (int level)
 	{
 		//Determine number of enemies based on current level number, based on a logarithmic progression
-		int enemyCount = (int)Mathf.Log(level*4, 2f);
+		int enemyCount = 1;// (int)Mathf.Log(level*4, 2f);
 
 		BoardSetup (); //Creates the outer walls and floor.
 		InitialiseList (); //Reset our list of gridpositions.

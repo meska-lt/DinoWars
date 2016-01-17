@@ -6,7 +6,8 @@ public abstract class MovingObject : MonoBehaviour
 {
 	public float moveTime = 1f; //Time it will take object to move, in seconds.
 	public LayerMask blockingLayer; //Layer on which collision will be checked.
-	private bool doneWalking = true;
+	public bool doneWalking = true;
+	public bool animationOngoing = false;
 
 	private BoxCollider2D boxCollider; //The BoxCollider2D component attached to this object.
 	private Rigidbody2D rb2D; //The Rigidbody2D component attached to this object.
@@ -25,6 +26,11 @@ public abstract class MovingObject : MonoBehaviour
 	//Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
 	protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
 	{
+		if (!enabled) {
+			hit = new RaycastHit2D();
+			return false;
+		}
+
 		if (!doneWalking) {
 			hit = new RaycastHit2D();
 
@@ -79,6 +85,7 @@ public abstract class MovingObject : MonoBehaviour
 		}
 
 		OnDoneMoving ();
+		animationOngoing = false;
 		doneWalking = true;
 	}
 	
@@ -98,7 +105,7 @@ public abstract class MovingObject : MonoBehaviour
 		T hitComponent = hit.transform.GetComponent <T> ();
 		
 		//If canMove is false and hitComponent is not equal to null, meaning MovingObject is blocked and has hit something it can interact with.
-		if(!canMove && hitComponent != null)
+		if(!canMove)
 			OnCantMove (hitComponent); //Call the OnCantMove function and pass it hitComponent as a parameter.
 	}
 

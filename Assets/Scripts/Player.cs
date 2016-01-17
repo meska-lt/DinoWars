@@ -112,6 +112,9 @@ public class Player : MovingObject
 	{
 		System.Type componentType = component.GetType();
 
+		if (component == null)
+			return;
+
 		if (componentType == System.Type.GetType ("Enemy")) {
 			print("Enemy hit.");
 		}
@@ -138,6 +141,11 @@ public class Player : MovingObject
 	//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
 	private void OnTriggerEnter2D (Collider2D other)
 	{
+		Debug.Log ("Player OnTriggerEnter2D");
+		if (other.tag == "Enemy") {
+			Debug.Log("Game over, mdfk");
+			GameManager.instance.GameOver();
+		}
 		//Check if the tag of the trigger collided with is Exit.
 //		if(other.tag == "Exit")
 //		{
