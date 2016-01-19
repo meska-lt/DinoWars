@@ -12,11 +12,6 @@ public class Enemy : MovingObject
 	private const int TimesStandingStillMax = 60;
 
 	private Animator animator;
-//	private int lastHorizontalDirection = 0;
-//	private int lastVerticalDirection = 0;
-//	private int timeStandingStill = 0;
-//	private bool animationOngoing = false;
-	
 	private Transform target;                           //Transform to attempt to move toward each turn.
 
 	protected override void Start()
@@ -24,7 +19,6 @@ public class Enemy : MovingObject
 		animator = GetComponent<Animator>(); //Get a component reference to the Player's animator component
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start(); //Call the Start function of the MovingObject base class.
-
 	}
 	
 	//This function is called when the behaviour becomes disabled or inactive.
@@ -46,10 +40,6 @@ public class Enemy : MovingObject
 		RaycastHit2D hit; //Hit allows us to reference the result of the Linecast done in Move.
 		if (!Move (xDir, yDir, out hit))
 			return;
-
-		
-
-
 	}
 	
 	protected override void OnDoneMoving ()
@@ -81,6 +71,7 @@ public class Enemy : MovingObject
 		if(other.tag == "Player")
 		{
 			Debug.Log ("Player hit.");
+			GameManager.instance.GameOver();
 //			Invoke ("Restart", 1);
 		}
 	}
@@ -92,15 +83,6 @@ public class Enemy : MovingObject
 		Application.LoadLevel(Application.loadedLevel); //Load the last scene loaded, in this case Main, the only scene in the game.
 	}
 	
-	//LoseFood is called when an enemy attacks the player.
-	//It takes a parameter loss which specifies how many points to lose.
-	public void LoseFood(int loss)
-	{
-//		animator.SetTrigger ("playerHit"); //Set the trigger for the player animator to transition to the playerHit animation.		
-//		food -= loss; //Subtract lost food points from the players total.
-//		CheckIfGameOver (); //Check to see if game has ended.
-	}	
-
 	public void MoveEnemy ()
 	{
 		//Declare variables for X and Y axis move directions, these range from -1 to 1.
@@ -133,15 +115,5 @@ public class Enemy : MovingObject
 
 		//Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
 		AttemptMove <Wall> (xDir, yDir);
-	}
-	
-	//CheckIfGameOver checks if the player is out of food points and if so, ends the game.
-	private void CheckIfGameOver ()
-	{
-		//Check if food point total is less than or equal to zero.
-//		if (food <= 0) 
-//		{
-//			GameManager.instance.GameOver (); //Call the GameOver function of GameManager.
-//		}
 	}
 }

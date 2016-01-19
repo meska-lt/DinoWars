@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null; //Static instance of GameManager which allows it to be accessed by any other script.
 
 	private BoardManager boardScript; //Store a reference to our BoardManager which will set up the level.
-	private int level = 1; //Current level number, expressed in game as "Day 1".
+	public int level = 1; //Current level number, expressed in game as "Day 1".
 	
 
 //	[HideInInspector] public bool playersTurn = true;
@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() 
 	{
-
+		if (!GameOverManager.instance.timeToFinish)
+		{
+			GameOverManager.instance.timeToFinish = true;
+		}
 	}
 	
 	//Update is called every frame.
