@@ -10,7 +10,7 @@ public class Player : MovingObject
 	private const string AnimatorTriggerMoveDown = "DinoDown";
 	private const string AnimatorTriggerMoveLeft = "DinoLeft";
 
-	private int lastHitWallId = -1;
+//	private int lastHitWallId = -1;
 
 //	public float restartLevelDelay = 1f; //Delay time in seconds to restart level.
 //	public int pointsPerFood = 10; //Number of points to add to player food points when picking up a food object.
@@ -79,7 +79,7 @@ public class Player : MovingObject
 		//If Move returns true, meaning Player was able to move into an empty space.
 		if (Move (xDir, yDir, out hit)) 
 		{
-			lastHitWallId = -1;
+//			lastHitWallId = -1;
 
 			if ((xDir == 0) && (yDir == 1) && !animator.GetBool(AnimatorTriggerMoveUp))
 				animator.SetBool(AnimatorTriggerMoveUp, true);
@@ -91,7 +91,7 @@ public class Player : MovingObject
 				animator.SetBool(AnimatorTriggerMoveLeft, true);
 		}
 
-		CheckIfGameOver (); //Since the player has moved and lost food points, check if the game has ended.
+//		CheckIfGameOver (); //Since the player has moved and lost food points, check if the game has ended.
 		
 		//Set the playersTurn boolean of GameManager to false now that players turn is over.
 //		GameManager.instance.playersTurn = false;
@@ -110,42 +110,16 @@ public class Player : MovingObject
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
 	protected override void OnCantMove <T> (T component)
 	{
-		System.Type componentType = component.GetType();
-
 		if (component == null)
 			return;
-
-		if (componentType == System.Type.GetType ("Enemy")) {
-			print("Enemy hit.");
-		}
-		else if (componentType == System.Type.GetType ("Wall")) {
-			print("Wall hit.");
-
-			int componentInstanceId = component.GetInstanceID();
-
-			if (lastHitWallId == -1)
-				lastHitWallId = componentInstanceId;
-			else if (lastHitWallId == componentInstanceId) {
- 				Wall wall = component as Wall;
-				wall.DamageWall(1);
-				print("Wall destroyed.");
-				lastHitWallId = -1;
-			}
-		}
-
-//		Wall hitWall = component as Wall; //Set hitWall to equal the component passed in as a parameter.
-//		hitWall.DamageWall(wallDamage); //Call the DamageWall function of the Wall we are hitting.
-//		animator.SetTrigger("playerChop"); //Set the attack trigger of the player's animation controller in order to play the player's attack animation.
+		print ("Wall hit.");
+		Wall wall = component as Wall;
+		wall.DestroyWall();
 	}
 
 	//OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
 	private void OnTriggerEnter2D (Collider2D other)
 	{
-		Debug.Log ("Player OnTriggerEnter2D");
-		if (other.tag == "Enemy") {
-			Debug.Log("Game over, mdfk");
-			GameManager.instance.GameOver();
-		}
 		//Check if the tag of the trigger collided with is Exit.
 //		if(other.tag == "Exit")
 //		{

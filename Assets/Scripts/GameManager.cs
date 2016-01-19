@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
 	private BoardManager boardScript; //Store a reference to our BoardManager which will set up the level.
 	private int level = 1; //Current level number, expressed in game as "Day 1".
+	
+
 //	[HideInInspector] public bool playersTurn = true;
 	
 	//Awake is always called before any Start functions
@@ -19,16 +21,16 @@ public class GameManager : MonoBehaviour {
 
 		DontDestroyOnLoad(gameObject); //Sets this to not be destroyed when reloading scene
 		boardScript = GetComponent<BoardManager>(); //Get a component reference to the attached BoardManager script
-		
 		//Call the InitGame function to initialize the first level 
 		InitGame();
 	}
 	
 	//Initializes the game for each level.
-	void InitGame()
+	public void InitGame()
 	{
 		boardScript.SetupScene(level); //Call the SetupScene function of the BoardManager script, pass it current level number.
 	}
+
 
 	public void GameOver() 
 	{
