@@ -31,16 +31,19 @@ public class GameOverManager : MonoBehaviour
 		{
 			finishOngoing = true;
 			anim.SetTrigger("GameOver");
-			restartTimer += Time.deltaTime;
-
-			if (restartTimer >= restartDelay)
-			{
-				GameManager.instance.level += 1;
-				GameManager.instance.InitGame();
-				restartTimer = 0f;
-				timeToFinish = false;
-				timeToFinish = false;
-			}
+			restartTimer = Time.timeSinceLevelLoad;
 		}
+		/*
+		if (finishOngoing && ((restartDelay+restartTimer) < Time.timeSinceLevelLoad))
+		{
+			GameManager.instance.level += 1;
+			GameManager.instance.InitGame();
+			restartTimer = 0f;
+			timeToFinish = false;
+			finishOngoing = false;
+			anim.ResetTrigger("GameOver");
+			anim.SetTrigger("GameStarts");
+		}
+		*/
 	}
 }
